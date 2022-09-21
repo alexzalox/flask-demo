@@ -6,17 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首頁</title>
-    <style>
-        #date {
-            margin-top: 12px;
-            display: inline-block;
-            padding: 6px;
-            background-color: black;
-            color: white;
-            font-size: 16px;
-            border-radius: 6px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{url_for('static',filename='./css/main.css')}}">
 </head>
 
 <body onload="getTime()">
@@ -29,19 +19,11 @@
         <li>
             <a href="/stock" target="_blank">亞股資訊</a>
         </li>
+        <li>
+            <a href="/pm25" target="_blank">PM2.5全台資訊</a>
+        </li>
     </ul>
-    <script>
-        const timeEl = document.querySelector("#date");
-        function getTime() {
-            let date = new Date();
-            timeEl.innerText = `${date.getFullYear()}-${date.getMonth() + 1}\
-    -${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-
-            setTimeout(getTime, 1000);
-
-        }
-
-    </script>
+    <script src="{{url_for('static',filename='./js/main.js')}}"></script>
 </body>
 
 </html>
