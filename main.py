@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from pm25 import get_pm25
+from pm25 import get_pm25, get_six_pm25
 import json
 
 app = Flask(__name__)
@@ -90,15 +90,23 @@ def pm25_charts():
     return render_template('./pm25-charts.html')
 
 
-@app.route('/pm25-json')
+@app.route('/pm25-json', methods=['POST'])
 def pm25_json():
     columns, values = get_pm25()
-    print(values)
     site = [value[1] for value in values]
     pm25 = [value[2] for value in values]
     date = values[0][-1]
 
     return json.dumps({'date': date, 'site': site, 'pm25': pm25}, ensure_ascii=False)
+
+
+@app.route('/pm25-six-json', methods=['POST'])
+def pm25_six_json():
+    values = get_six_pm25()
+    site = [value[0] for value in values]
+    pm25 = [value[1] for value in values]
+
+    return json.dumps({'site': site, 'pm25': pm25}, ensure_ascii=False)
 
 
 if __name__ == '__main__':
