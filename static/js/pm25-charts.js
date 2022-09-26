@@ -1,4 +1,11 @@
 let chart = echarts.init(document.querySelector("#main"));
+let pm25HighSite = document.querySelector("#pm25_high_site");
+let pm25HighValue = document.querySelector("#pm25_high_value");
+let pm25LowSite = document.querySelector("#pm25_low_site");
+let pm25LowValue = document.querySelector("#pm25_low_value");
+let dateEl = document.querySelector("#date")
+
+console.log(pm25HighSite, pm25HighValue, pm25LowSite, pm25LowValue)
 
 $(document).ready(() => {
     drawPM25();
@@ -17,7 +24,8 @@ function drawPM25() {
                 chart.hideLoading();
                 console.log(data);
                 // drawPM25Chart(data);
-                drawPM25Chart2(data);
+                drawPM25Chart(data);
+                renderMaxPM25(data)
             },
             error: () => {
                 chart.hideLoading();
@@ -26,6 +34,26 @@ function drawPM25() {
         }
     );
 }
+
+function renderMaxPM25(data) {
+    let pm25 = data["pm25"];
+    let site = data["site"];
+    let maxValue = Math.max(...pm25)
+    let maxIndex = pm25.indexOf(maxValue);
+    let maxSite = data["site"][maxIndex];
+    let minValue = Math.min(...pm25)
+    let minIndex = pm25.indexOf(minValue);
+    let minSite = data["site"][minIndex];
+    console.log(maxSite, maxValue);
+    console.log(minSite, minValue);
+
+    pm25HighSite.innerText = maxSite;
+    pm25HighValue.innerText = maxValue;
+    pm25LowSite.innerText = minSite;
+    pm25LowValue.innerText = minValue;
+    dateEl.innerText = data["date"]
+}
+
 
 function drawPM25Chart2(data2) {
     var chartDom = document.getElementById('main');

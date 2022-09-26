@@ -87,16 +87,18 @@ def pm25():
 @app.route('/pm25-charts')
 def pm25_charts():
 
-    return render_template('./pm25_charts.html')
+    return render_template('./pm25-charts.html')
 
 
 @app.route('/pm25-json')
 def pm25_json():
     columns, values = get_pm25()
+    print(values)
     site = [value[1] for value in values]
     pm25 = [value[2] for value in values]
+    date = values[0][-1]
 
-    return json.dumps({'site': site, 'pm25': pm25}, ensure_ascii=False)
+    return json.dumps({'date': date, 'site': site, 'pm25': pm25}, ensure_ascii=False)
 
 
 if __name__ == '__main__':
