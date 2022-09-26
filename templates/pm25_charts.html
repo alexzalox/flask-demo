@@ -20,32 +20,7 @@
     <h1>PM2.5 全台資訊圖</h1>
     <div id="main"></div>
 
-    <script>
-        let chart = echarts.init(document.querySelector("#main"));
-        // 指定图表的配置项和数据
-        let option = {
-            title: {
-                text: 'ECharts 入门示例'
-            },
-            tooltip: {},
-            legend: {
-                data: ['销量']
-            },
-            xAxis: {
-                data: ['Asus NoteBook', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-            },
-            yAxis: {},
-            series: [
-                {
-                    name: '销量',
-                    type: 'bar',
-                    data: [100, 20, 36, 10, 10, 20]
-                }
-            ]
-        };
-
-        chart.setOption(option);
-    </script>
+    <script src="{{url_for('static',filename='./js/pm25-charts.js')}}"></script>
 </body>
 
 </html>
