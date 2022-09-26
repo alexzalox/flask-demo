@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from pm25 import get_pm25, get_six_pm25
+from pm25 import get_pm25, get_six_pm25, get_countys, get_county_pm25
 import json
 
 app = Flask(__name__)
@@ -87,7 +87,7 @@ def pm25():
 @app.route('/pm25-charts')
 def pm25_charts():
 
-    return render_template('./pm25-charts.html')
+    return render_template('./pm25-charts.html', countys=get_countys())
 
 
 @app.route('/pm25-json', methods=['POST'])
@@ -108,6 +108,17 @@ def pm25_six_json():
 
     return json.dumps({'site': site, 'pm25': pm25}, ensure_ascii=False)
 
+
+@app.route('/pm25-county/<county>', methods=['POST'])
+def pm25_county_json(county):
+    try:
+        values = get_county_pm25(county)
+        site = [value[0] for value in values]
+        pm25 = [value[1] for value in values]
+
+        return json.dumps({'site': site, 'pm25': pm25}, ensure_ascii=False)
+    except:
+        return '取得資料失敗!'
 
 if __name__ == '__main__':
     pm25_json()

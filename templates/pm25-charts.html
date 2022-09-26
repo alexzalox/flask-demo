@@ -46,8 +46,14 @@
     </div>
 
     <div id="six" style="width: 100%;height:400px;">
-
     </div>
+    <select name="select_county" id="select_county">
+        {% for county in countys %}
+        <option value="{{county}}">{{county}}</option>
+        {% endfor %}
+    </select>
+    <input type="button" value="確定" id="county_btn">
+    <div id="county" style="width: 100%;height:400px;"></div>
 
     <a href="/">回首頁</a>
     <script src="{{url_for('static',filename='./js/pm25-charts.js')}}"></script>

@@ -1,5 +1,6 @@
 let chart = echarts.init(document.querySelector("#main"));
 let chart1 = echarts.init(document.querySelector("#six"));
+let chart2 = echarts.init(document.querySelector("#county"));
 
 let pm25HighSite = document.querySelector("#pm25_high_site");
 let pm25HighValue = document.querySelector("#pm25_high_value");
@@ -12,9 +13,31 @@ let dateEl = document.querySelector("#date");
 $(document).ready(() => {
     drawPM25();
     drawSixPM25();
+    drawCountyPM25("屏東縣");
 });
 
+$("#county_btn").click(() => {
+    drawCountyPM25($("#select_county").val());
+});
 
+function drawCountyPM25(county) {
+    chart2.showLoading();
+    $.ajax(
+        {
+            url: `/pm25-county/${county}`,
+            type: "POST",
+            dataType: "json",
+            success: (data) => {
+                chart2.hideLoading();
+                drawChart(data["site"], data["pm25"], "", chart2, "#32cd32");
+            },
+            error: () => {
+                chart2.hideLoading();
+                alert("讀取資料失敗!");
+            }
+        }
+    );
+}
 
 function drawSixPM25() {
     chart1.showLoading();
@@ -25,7 +48,7 @@ function drawSixPM25() {
             dataType: "json",
             success: (data) => {
                 chart1.hideLoading();
-                drawChart(data["site"], data["pm25"], "PM2.5六都平均值", chart1);
+                drawChart(data["site"], data["pm25"], "PM2.5六都平均值", chart1, "#8b008b");
             },
             error: () => {
                 chart1.hideLoading();
@@ -77,7 +100,7 @@ function renderMaxPM25(data) {
 }
 
 
-function drawChart(xdata, ydata, title = "", chart = null) {
+function drawChart(xdata, ydata, title = "", chart = null, color = "#00008b") {
     // 指定图表的配置项和数据
     let option = {
         title: {
@@ -106,6 +129,9 @@ function drawChart(xdata, ydata, title = "", chart = null) {
         yAxis: {},
         series: [
             {
+                itemStyle: {
+                    color: color
+                },
                 name: 'PM2.5',
                 type: 'bar',
                 data: ydata
