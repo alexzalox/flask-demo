@@ -54,7 +54,7 @@ function drawSixPM25() {
             dataType: "json",
             success: (data) => {
                 chart1.hideLoading();
-                drawChart(data["site"], data["pm25"], "PM2.5六都平均值", chart1, "#8b008b");
+                drawChart(data["site"], data["pm25"], "六都平均值", chart1, "#8b008b");
             },
             error: () => {
                 chart1.hideLoading();
@@ -74,7 +74,7 @@ function drawPM25() {
             dataType: "json",
             success: (data) => {
                 chart.hideLoading();
-                drawChart(data["site"], data["pm25"], "PM2.5全省示意圖", chart);
+                drawChart(data["site"], data["pm25"], "全省示意圖", chart);
                 renderMaxPM25(data);
             },
             error: () => {
