@@ -87,7 +87,7 @@ def pm25():
 @app.route('/pm25-charts')
 def pm25_charts():
 
-    return render_template('./pm25-charts.html', countys=get_countys())
+    return render_template('./pm25-charts-bulma.html', countys=get_countys())
 
 
 @app.route('/pm25-json', methods=['POST'])
@@ -119,6 +119,7 @@ def pm25_county_json(county):
         return json.dumps({'site': site, 'pm25': pm25}, ensure_ascii=False)
     except:
         return '取得資料失敗!'
+
 
 if __name__ == '__main__':
     pm25_json()

@@ -33,16 +33,19 @@ def get_six_pm25():
 def get_countys():
     global df
 
-    return list(set(df['county']))
+    return sorted(set(df['county']))
+
 
 def get_county_pm25(county):
     global df
 
-    datas = df.groupby('county').get_group(county)[["site","pm25"]].values.tolist()
-    
+    datas = df.groupby('county').get_group(county)[
+        ["site", "pm25"]].values.tolist()
+
     return datas
 
 
 if __name__ == '__main__':
 
     print(get_pm25(True))
+    print(get_countys())
